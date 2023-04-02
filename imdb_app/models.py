@@ -26,6 +26,48 @@ class Director(models.Model):
         db_table = 'directors'
 
     name = models.CharField(max_length=128)
+    birth_date = models.DateField()
+
+    def __str__(self):
+        return f'{self.name}, birth year: {self.birth_date}'
+
+
+class Review(models.Model):
+
+    class Meta:
+        db_table = 'ratings'
+
+    movie = models.ForeignKey(to="Movie", on_delete=RESTRICT)
+    rating = models.FloatField(
+        validators=[
+            MaxValueValidator(limit_value=10),
+            MinValueValidator(limit_value=1)
+        ]
+    )
+
+    review_date = models.DateField()
+    review_text = models.CharField(null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.movie}, Rating: {self.rating}, Date: {self.review_date}, Text: {self.review_text} '
+
+
+class Actor(models.Model):
+
+    class Meta:
+        db_table = 'actors'
+
+    name = models.CharField(max_length=256, db_column='name', null=False, blank=False)
+    birth_year = models.IntegerField(db_column='birth_year', null=False, blank=False)
+
+    movies = models.ManyToManyField(Movie, through= "MovieActor")
+
+    def __str__(self):
+        return self.name
+
+
+
+
 
 
 
