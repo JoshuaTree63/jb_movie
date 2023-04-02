@@ -65,6 +65,18 @@ class Actor(models.Model):
     def __str__(self):
         return self.name
 
+class MovieActor(models.Model):
+
+    class Meta:
+        db_table = 'movie_actors'
+
+    actor = models.ForeignKey(Actor, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    salary = models.DateField()
+    main_role = models.BooleanField(null= False, blank=False)
+
+    def __str__(self):
+        return f'{self.actor.name}, in movie {self.movie.name}'
 
 
 
