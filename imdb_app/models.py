@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import RESTRICT
 from django.core.validators import MaxValueValidator, MinValueValidator
+from datetime
 
 
 class Movie(models.Model):
@@ -73,7 +74,7 @@ class MovieActor(models.Model):
     actor = models.ForeignKey(Actor, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     salary = models.DateField()
-    main_role = models.BooleanField(null= False, blank=False)
+    main_role = models.BooleanField(null=False, blank=False)
 
     def __str__(self):
         return f'{self.actor.name}, in movie {self.movie.name}'
