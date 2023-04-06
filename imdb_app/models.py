@@ -11,7 +11,7 @@ class Movie(models.Model):
     name = models.CharField(max_length=128)
     year = models.IntegerField()
     director = models.ForeignKey(to="Director", on_delete=RESTRICT, null=False, blank=True)
-    description = models.TimeField(null=True, blank=False)
+    description = models.TextField(null=True, blank=False)
     duration_in_min = models.IntegerField(null=True)
 
     actors = models.ManyToManyField('Actor', through="MovieActor")
@@ -33,9 +33,8 @@ class Director(models.Model):
 
 
 class Review(models.Model):
-
     class Meta:
-        db_table = 'ratings'
+        db_table = 'reviews'
 
     movie = models.ForeignKey(to="Movie", on_delete=RESTRICT)
     rating = models.FloatField(
@@ -46,10 +45,10 @@ class Review(models.Model):
     )
 
     review_date = models.DateField()
-    review_text = models.CharField(null=True, blank=True)
+    review_text = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.movie}, Rating: {self.rating}, Date: {self.review_date}, Text: {self.review_text} '
+        return f"{self.movie.name}, Rating: {self.rating}, Date: {self.review_date}, Text: {self.review_text}"
 
 
 class Actor(models.Model):
@@ -77,10 +76,6 @@ class MovieActor(models.Model):
 
     def __str__(self):
         return f'{self.actor.name}, in movie {self.movie.name}'
-
-
-
-
 
 
 # https://github.com/JoshuaTree63/jb_movie
