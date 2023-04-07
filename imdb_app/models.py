@@ -13,6 +13,7 @@ class Movie(models.Model):
     director = models.ForeignKey(to="Director", on_delete=RESTRICT, null=False, blank=True)
     description = models.TextField(null=True, blank=False)
     duration_in_min = models.IntegerField(null=True)
+    fav_pat = models.CharField(max_length=128, null=True, blank=False)
 
     actors = models.ManyToManyField('Actor', through="MovieActor")
 
@@ -59,7 +60,7 @@ class Actor(models.Model):
     name = models.CharField(max_length=256, db_column='name', null=False, blank=False)
     birth_year = models.IntegerField(db_column='birth_year', null=False, blank=False)
 
-    movies = models.ManyToManyField(Movie, through= "MovieActor")
+    movies = models.ManyToManyField(Movie, through="MovieActor")
 
     def __str__(self):
         return self.name
